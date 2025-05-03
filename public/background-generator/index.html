@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Generador de Fondos</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="container">
+    <h1>🎨 Generador de Fondos Animados</h1>
+
+    <div class="controls">
+      <label>Color 1:
+        <input type="color" id="color1" value="#ff7e5f" />
+      </label>
+      <label>Color 2:
+        <input type="color" id="color2" value="#feb47b" />
+      </label>
+      <label>Dirección:
+        <select id="direction">
+          <option value="to right">→ Horizontal</option>
+          <option value="to left">← Izquierda</option>
+          <option value="to bottom">↓ Vertical</option>
+          <option value="to top">↑ Arriba</option>
+          <option value="45deg">↗️ 45°</option>
+          <option value="135deg">↘️ 135°</option>
+        </select>
+      </label>
+      <button id="generate">Aplicar Fondo</button>
+      <button id="copy">📋 Copiar CSS</button>
+    </div>
+
+    <div class="preview" id="preview">
+      <p>Vista previa del fondo</p>
+    </div>
+
+    <textarea id="cssOutput" readonly></textarea>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

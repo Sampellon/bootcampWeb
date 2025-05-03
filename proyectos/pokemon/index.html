@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pokedex</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="header">
+    <nav class="header__nav">
+      <div class="banner">
+        <img src="./img/banner_home.jpeg" alt="Banner Home">
+      </div>
+      <div class="header__logo">Pokédex</div>
+      <input 
+        type="text" 
+        class="header__search" 
+        id="searchInput" 
+        placeholder="Buscar Pokémon...">
+    </nav>
+  </header>
+
+  <main class="main">
+    <!-- Carrusel manual -->
+    <section class="carousel" id="carousel">
+      <!-- Las tarjetas se generarán con JS -->
+    </section>
+
+    <section class="card-display" id="cardDisplay">
+      <!-- Tarjeta individual del Pokémon buscado -->
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="footer__content">
+      <p>Busca cualquier Pokémon para ver su información</p>
+    </div>
+  </footer>
+
+  <script>
+    
+    const carouselPokemons = [
+      {
+        name: "Pikachu",
+        image: "./img/pikachu.png", 
+        type: "Eléctrico",
+        ability: "Static"
+      },
+      {
+        name: "Charmander",
+        image: "./img/charmander.png",
+        type: "Fuego",
+        ability: "Blaze"
+      },
+      {
+        name: "Bulbasaur",
+        image: "./img/bulbasaur.png",
+        type: "Planta/Veneno",
+        ability: "Overgrow"
+      },
+      {
+        name: "Squirtle",
+        image: "./img/squirtle.png",
+        type: "Agua",
+        ability: "Torrent"
+      }
+    ];
+
+    // Función para renderizar el carrusel manual
+    function loadManualCarousel() {
+      const carousel = document.getElementById("carousel");
+      carousel.innerHTML = carouselPokemons.map(pokemon => `
+        <div class="carousel__item">
+          <h3>${pokemon.name.toUpperCase()}</h3>
+          <img src="${pokemon.image}" alt="${pokemon.name}">
+          <p><strong>Tipo:</strong> ${pokemon.type}</p>
+          <p><strong>Habilidad:</strong> ${pokemon.ability}</p>
+        </div>
+      `).join("");
+    }
+
+    loadManualCarousel();
+
+    // Funcionalidad de búsqueda usando la API para mostrar la tarjeta individual
+    const apiUrl = "https://pokeapi.co/api/v2/pokemon";
+
+    async function fetchPokemon(query) {
+      try {
+        const response = await fetch(`${apiUrl}/${query}`);
+        if (!response.ok) throw new Error("No se encontró el Pokémon");
+        const data = await response.json();
+        displayPokemonCard(data);
+      } catch (error) {
+        alert(error.message);
+      }
+    }
+
+    function displayPokemonCard(pokemon) {
+      const cardDisplay = document.getElementById("cardDisplay");
+      cardDisplay.innerHTML = `
+        <div class="carousel__item">
+          <h2>${pokemon.name.toUpperCase()}</h2>
+          <img src="${pokemon.sprites.front_default}" alt="${pokemon.name}">
+          <p><strong>Tipo:</strong> ${pokemon.types.map(t => t.type.name).join(", ")}</p>
+          <p><strong>Habilidad:</strong> ${pokemon.abilities.map(a => a.ability.name).join(", ")}</p>
+        </div>
+      `;
+    }
+
+    document.getElementById("searchInput").addEventListener("keypress", (e) => {
+      if (e.key === "Enter") {
+        const query = e.target.value.trim().toLowerCase();
+        if (query) fetchPokemon(query);
+      }
+    });
+  </script>
+  <script src="./js/app.js"></script>
+</body>
+</html>
